@@ -1,5 +1,4 @@
 Invasive
 ========
 
-Game about invasive species
-This a a game that about invasive species that will be be completed using JavaScript.
+A game about invasive bugs. The game will be be completed using JavaScript.
