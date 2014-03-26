@@ -109,19 +109,6 @@ function canvasApp(){
 		camera.x+=camera.dx;
 		camera.y+=camera.dy;
 		
-		if (camera.x<0) {
-			camera.x=0;
-			
-		}else if (camera.x > (world.width - camera.width)-world.tileWidth) {
-			camera.x=world.width - camera.width;
-		}
-		
-		if (camera.y<0) {
-			camera.y=0;
-			
-		}else if (camera.y > (world.height - camera.height)-world.tileHeight) {
-			camera.y=world.height - camera.height;
-		}
 	
 		context.fillStyle = '#000000';
 		context.fillRect(0, 0, theCanvas.width, theCanvas.height);
