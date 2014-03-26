@@ -1,1 +1,0 @@
-A game about bugs and getting rid of bugs
