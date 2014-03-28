@@ -47,9 +47,10 @@ function canvasApp(){
 
 	if (!canvasSupport()) {
 			 return;
-  	}else{
-		
-function  drawScreen () {
+  	}
+	
+	//creates the color, border and size of the canvas
+	 function  drawScreen () {
 
 		
 		context.fillStyle = '#FFFFFF';
@@ -60,9 +61,18 @@ function  drawScreen () {
 	
 	}
 	
-	    var theCanvas = document.getElementById('canvas');
-	    var context = theCanvas.getContext('2d');
-	}
+    theCanvas = document.getElementById('canvasOne');
+	context = theCanvas.getContext('2d');
+	//calls the drawscreen function and runs it
+	function canvasSize() {
+			window.setTimeout(canvasSize, 20);
+			drawScreen()	
+		}
+		
+	canvasSize();
+	
+		
+
 	
 
 	document.onkeydown=function(e){
