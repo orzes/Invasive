@@ -47,6 +47,18 @@ function canvasApp(){
 	if (!canvasSupport()) {
 			 return;
   	}else{
+		
+		function  drawScreen () {
+
+		
+		context.fillStyle = '#FFFFFF';
+		context.fillRect(0, 0, theCanvas.width, theCanvas.height);
+		//Box
+		context.strokeStyle = '#000000'; 
+		context.strokeRect(1,  1, theCanvas.width-2, theCanvas.height-2);
+	
+	}
+	
 	    var theCanvas = document.getElementById('canvas');
 	    var context = theCanvas.getContext('2d');
 	}
