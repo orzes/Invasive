@@ -48,7 +48,7 @@ function canvasApp(){
 			 return;
   	}else{
 		
-		function  drawScreen () {
+function  drawScreen () {
 
 		
 		context.fillStyle = '#FFFFFF';
@@ -198,6 +198,8 @@ function canvasApp(){
 		runGame();
 		window.setTimeout(gameLoop, intervalTime);
 	}
+	
+gameLoop();
 
 }
 
@@ -209,7 +211,7 @@ function canvasApp(){
 </head>
 <body>
 <div style="position: absolute; top: 50px; left: 50px;">
-<canvas id="canvas" width="160" height="160">
+<canvas id="canvasOne" width="1280" height="800">
  Your browser does not support the HTML 5 Canvas. 
 </canvas>
 <div>
