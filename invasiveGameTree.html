@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Invasive Game Tree </title>
+		<script src="modernizr.js"></script>
+		<script type="text/javascript">
+		var tree = new Image();
+		tree.src = "tree6.png";
+
+		window.onload = function () {
+			if (!Modernizr.canvas) {
+				return;
+			} else {
+				tree.onload = canvasApp ();
+			}
+		}
+
+		function canvasApp() {
+
+			var theCanvas = document.getElementById('canvas');
+		    var context = theCanvas.getContext('2d');   
+
+			drawScreen();
+
+			function drawScreen() {
+				placeShip(tree, 50, 10);
+				placeShip(tree, 100, 80);
+				//placeShip(tree, 90, 80);
+				//placeShip(tree, 110, 95);
+				//placeShip(tree, 130, 140);
+			}
+			
+			function placeShip(obj, posX, posY, width, height) {
+				if (width && height) {
+					context.drawImage(obj, posX, posY, width, height);
+				} else {
+					context.drawImage(obj, posX, posY);
+				}
+			}
+			
+		}
+
+		</script> 
+	</head>
+	<body>
+		<div style="position: absolute; top: 50px; left: 50px;">
+			<canvas id="canvas" width="1000" height="1000">
+				Your browser does not support the HTML 5 Canvas. 
+			</canvas>
+		</div>
+	</body>
+</html>
