@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tree Placement</title>
+<script src="modernizr.js"></script>
+<script type="text/javascript">
+window.addEventListener('load', eventWindowLoaded, false);	
+function eventWindowLoaded() {
+
+	canvasApp();
+	
+}
+
+function canvasSupport () {
+  	return Modernizr.canvas;
+}
+
+
+function canvasApp(){
+	
+
+	if (!canvasSupport()) {
+			 return;
+  	}else{
+	    var theCanvas = document.getElementById('canvas');
+	    var context = theCanvas.getContext('2d');
+	}
+	
+	var Tree=new Image();
+	Tree.src="tree1.png";
+	Tree.addEventListener('load', eventTreeLoaded , false);
+	
+	function eventTreeLoaded() {
+		drawScreen();
+	}
+	
+
+	function drawScreen() {
+		//y,x
+		 context.drawImage(Tree, 0, 1);
+		 context.drawImage(Tree, 180, 100);
+		 context.drawImage(Tree, 280, 300);
+		 context.drawImage(Tree, 480, 30);
+		 context.drawImage(Tree, 0, 450);
+		 context.drawImage(Tree, 800, 50);
+		 context.drawImage(Tree, 700, 450);
+		 context.drawImage(Tree, 670, 590);
+		 context.drawImage(Tree, 910, 450);
+		 
+		 
+	}
+
+}
+
+
+</script> 
+</head>
+<body>
+<div style="position: absolute; top: 50px; left: 50px;">
+<canvas id="canvas" width="2000" height="1000">
+ Your browser does not support the HTML 5 Canvas. 
+</canvas>
+</div>
+</body>
+</html>
