@@ -38,12 +38,6 @@ function canvasApp(){
     var bugs    = new Array(); //Declare a variable to store all the bugs
     var trees   = new Array(); //Declare a variable to store all the trees
     
-    //Center Origin aligning variables...
-    var bugW   = imgBug.width/2;
-    var bugH  = imgBug.height/2;
-    var treeW  = imgTree.width/2;
-    var treeH = imgTree.height/2;
-    
     //FOR LOOP to initialize tree objects
     for (i=0; i<4; i++) {
         var newTree = {};
@@ -71,12 +65,12 @@ function canvasApp(){
         
         //DRAW bugs
         for (var i=0; i < bugs.length - 1; i++) {
-            context.drawImage(imgBug, bugs[i].x - bugW, bugs[i].y - bugH);
+            context.drawImage(imgBug, bugs[i].x, bugs[i].y);
         }
         
         //DRAW trees
         for (var i=0; i < trees.length - 1; i++) {
-            context.drawImage(imgTree, trees[i].x - treeW*trees[i].scale, trees[i].y - treeH*trees[i].scale,
+            context.drawImage(imgTree, trees[i].x, trees[i].y,
                               600*trees[i].scale, 600*trees[i].scale);
         }
         context.restore();
