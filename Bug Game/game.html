@@ -42,7 +42,7 @@ function canvasApp(){
     for (i=0; i<9; i++) {
         var newTree = {};
         newTree.scale = 0.25;
-        newTree.x = 150*i;
+        newTree.x = 150*i + Math.floor(Math.random() * 55) + 1;
         newTree.y = Math.floor(Math.random() * 155) + 1;
         trees.push(newTree);
     }
