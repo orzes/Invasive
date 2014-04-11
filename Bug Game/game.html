@@ -39,11 +39,11 @@ function canvasApp(){
     var trees   = new Array(); //Declare a variable to store all the trees
     
     //FOR LOOP to initialize tree objects
-    for (i=0; i<4; i++) {
+    for (i=0; i<9; i++) {
         var newTree = {};
         newTree.scale = 0.25;
-        newTree.x = 150*i
-        newTree.y = 25;
+        newTree.x = 150*i;
+        newTree.y = Math.floor(Math.random() * 155) + 1;
         trees.push(newTree);
     }
     
@@ -123,7 +123,7 @@ function canvasApp(){
 </head>
 <body>
 <div style="position: absolute; top: 50px; left: 50px;">
-<canvas id="canvas" width="500" height="500">
+<canvas id="canvas" width="1280" height="500">
  Your browser does not support the HTML 5 Canvas. 
 </canvas>
 </div>
