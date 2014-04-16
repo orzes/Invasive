@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chapter 4 Example 1: Image Basics</title>
+<script src="modernizr.js"></script>
+<script type='text/javascript' src='bug.js'></script>
+<script type="text/javascript">
+window.addEventListener('load', eventWindowLoaded, false);	
+function eventWindowLoaded() {
+
+	canvasApp();
+	
+}
+
+function canvasSupport () {
+  	return Modernizr.canvas;
+}
+
+
+function canvasApp(){
+	
+
+	if (!canvasSupport())
+    {
+			 return;
+  	}
+    else
+    {
+	    var theCanvas = document.getElementById('canvas');
+	    var context = theCanvas.getContext('2d');
+	}
+	
+	var imgBug  = new Image(); //Create image variable for the bugs
+    var imgTree = new Image(); //Create image variable for the trees
+    imgBug.src  = "bug.png";   //Load the bug image
+    imgTree.src = "tree.png";  //Load the tree image
+    var bugs    = new Array(); //Declare a variable to store all the bugs
+    var trees   = new Array(); //Declare a variable to store all the trees
+    
+    //FOR LOOP to initialize tree objects
+    for (i=0; i<9; i++) {
+        var newTree = {};
+        newTree.scale = 0.25;
+        newTree.x = 150*i;
+        newTree.y = Math.floor(Math.random() * 155) + 1;
+        trees.push(newTree);
+    }
+    
+    //FOR LOOP to initialize bug objects
+    for (i=0; i<11; i++) {
+        var newBug = {};
+        newBug.x = Math.floor(Math.random()*200) + theCanvas.width/2 - 200;
+        newBug.y = Math.floor(Math.random()*100) + theCanvas.height;
+        newBug.vel_x = 0;
+        newBug.vel_y = -2;
+        newBug.target = Math.floor(Math.random()*(trees.length-1)); //randomize tree targeting
+        bugs.push(newBug);
+    }
+    
+    //DRAW to display objects...
+    function drawScreen() {
+        context.save();
+        context.clearRect(0, 0, theCanvas.width, theCanvas.height);
+        
+        //DRAW bugs
+        for (var i=0; i < bugs.length - 1; i++) {
+            context.drawImage(imgBug, bugs[i].x, bugs[i].y);
+        }
+        
+        //DRAW trees
+        for (var i=0; i < trees.length - 1; i++) {
+            context.drawImage(imgTree, trees[i].x, trees[i].y,
+                              600*trees[i].scale, 600*trees[i].scale);
+        }
+        context.restore();
+	}
+	
+    //UPDATE to implement objects behavior...
+    function updateScreen() {
+        for (var i=0; i < bugs.length - 1; i++) {
+            //UPDATE bug positions based on their movements...
+            bugs[i].x += bugs[i].vel_x;
+            bugs[i].y += bugs[i].vel_y;
+            
+
+            newBug.vel_y = -2;
+            
+            //Artificial Intelligence (AI) - MOVING towards targeted tree
+            if (bugs[i].x < trees[bugs[i].target].x + 30)
+            {//BUG moves right...
+                bugs[i].vel_x += 0.1;
+            }
+            else if (bugs[i].x > trees[bugs[i].target].x + 40)
+            {//BUG moves left...
+                bugs[i].vel_x += -0.1;
+            }
+            else
+            {
+                bugs[i].vel_x /= 1.4;
+            }
+            
+            //Passing tree will delete itself
+            if (bugs[i].y < trees[bugs[i].target].y + 10)
+            {
+                bugs.splice(i,1);
+            }
+        }
+	}
+    
+	function gameLoop() {
+        window.setTimeout(gameLoop, 30);
+		drawScreen();   //CALL the drawing procedure
+        updateScreen(); //CALL the updating procedure
+	}
+    
+    gameLoop();
+
+}
+
+
+</script> 
+</head>
+<body>
+<div style="position: absolute; top: 50px; left: 50px;">
+<canvas id="canvas" width="1280" height="500">
+ Your browser does not support the HTML 5 Canvas. 
+</canvas>
+</div>
+</body>
+</html>
