@@ -31,19 +31,26 @@ function canvasApp(){
 	    var context = theCanvas.getContext('2d');
 	}
 	
-	var imgBug  = new Image(); //Create image variable for the bugs
-    var imgTree = new Image(); //Create image variable for the trees
-    imgBug.src  = "bug.png";   //Load the bug image
-    imgTree.src = "tree.png";  //Load the tree image
-    var bugs    = new Array(); //Declare a variable to store all the bugs
-    var trees   = new Array(); //Declare a variable to store all the trees
+	var imgBug  = new Image();     //Create image variable for the bugs
+    var imgTree = new Image();      //Create image variable for the trees
+    var imgBkgd = new Image();      //Create image variable for a background
+    imgBug.src  = "bug.png";        //Load the bug image
+    imgTree.src = "tree.png";       //Load the tree image
+    imgBkgd.src = "background.png"; //Load the tree image
+    var bugs    = new Array();      //Declare a variable to store all the bugs
+    var trees   = new Array();      //Declare a variable to store all the trees
+    
+    //INVENTORY variables - 05/20/2014 (Taylor McDowell)
+    var money   = 0;
+    var score   = 0;
     
     //FOR LOOP to initialize tree objects
-    for (i=0; i<11; i++) {
+    for (i=0; i<9; i++) {
         var newTree = {};
         newTree.scale = 0.25;
-        newTree.x = 150*i + Math.floor(Math.random() * 55) + 1;
-        newTree.y = Math.floor(Math.random() * 185) + 1;
+        newTree.x = 140*i + Math.floor(Math.random() * 55) + 1 - 50; //UPDATED
+        newTree.y = 150 + Math.floor(Math.random() * 85) + 1;        //UPDATED
+        newTree.health = 100; //ADDED
         trees.push(newTree);
     }
     
@@ -62,6 +69,9 @@ function canvasApp(){
     function drawScreen() {
         context.save();
         context.clearRect(0, 0, theCanvas.width, theCanvas.height);
+        
+        //DRAW the background
+        context.drawImage(imgBkgd, 0, 0); //ADDED
         
         //DRAW bugs
         for (var i=0; i < bugs.length - 1; i++) {
@@ -87,23 +97,24 @@ function canvasApp(){
             newBug.vel_y = -2;
             
             //Artificial Intelligence (AI) - MOVING towards targeted tree
-            if (bugs[i].x < trees[bugs[i].target].x + 30)
+            if (bugs[i].x < trees[bugs[i].target].x + 25) //UPDATED
             {//BUG moves right...
                 bugs[i].vel_x += 0.1;
             }
-            else if (bugs[i].x > trees[bugs[i].target].x + 40)
+            else if (bugs[i].x > trees[bugs[i].target].x + 45) //UPDATED
             {//BUG moves left...
                 bugs[i].vel_x += -0.1;
             }
             else
             {
-                bugs[i].vel_x /= 1.4;
+                bugs[i].vel_x /= 1.5; //UPDATED
             }
             
-            //Passing tree will delete itself
+            //Passing tree will delete itself and damage tree (UPDATED)
             if (bugs[i].y < trees[bugs[i].target].y + 10)
             {
                 bugs.splice(i,1);
+                trees[bugs[i].target].health -= 25; //ADDED
             }
         }
 	}
