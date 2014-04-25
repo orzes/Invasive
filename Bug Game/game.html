@@ -82,6 +82,8 @@ function canvasApp(){
         for (var i=0; i < trees.length - 1; i++) {
             context.drawImage(imgTree, trees[i].x, trees[i].y,
                               600*trees[i].scale, 600*trees[i].scale);
+            context.fillStyle = "#fff";
+            context.fillText(trees[i].health, trees[i].x + 65, trees[i].y + 35);
         }
         context.restore();
 	}
@@ -113,8 +115,8 @@ function canvasApp(){
             //Passing tree will delete itself and damage tree (UPDATED)
             if (bugs[i].y < trees[bugs[i].target].y + 10)
             {
+                trees[bugs[i].target].health -= 10; //ADDED
                 bugs.splice(i,1);
-                trees[bugs[i].target].health -= 25; //ADDED
             }
         }
 	}
