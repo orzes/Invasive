@@ -43,6 +43,7 @@ function canvasApp(){
     //INVENTORY variables - 05/20/2014 (Taylor McDowell)
     var money   = 0;
     var score   = 0;
+    var tree_health_total = 0;
     
     //FOR LOOP to initialize tree objects
     for (i=0; i<9; i++) {
@@ -65,6 +66,11 @@ function canvasApp(){
         bugs.push(newBug);
     }
     
+    //Initialize health info...
+    for (var i=0; i < trees.length - 1; i++) {
+        tree_health_total += trees[i].health;
+    }
+    
     //DRAW to display objects...
     function drawScreen() {
         context.save();
@@ -82,9 +88,13 @@ function canvasApp(){
         for (var i=0; i < trees.length - 1; i++) {
             context.drawImage(imgTree, trees[i].x, trees[i].y,
                               600*trees[i].scale, 600*trees[i].scale);
-            context.fillStyle = "#fff";
-            context.fillText(trees[i].health, trees[i].x + 65, trees[i].y + 35);
         }
+        
+        //DRAW current overall damage
+        score = (tree_health_total/((trees.length-1)*100))*100
+        context.fillStyle = "#fff";
+        context.fillText(score+"%", 50, 500);
+        
         context.restore();
 	}
 	
@@ -95,8 +105,7 @@ function canvasApp(){
             bugs[i].x += bugs[i].vel_x;
             bugs[i].y += bugs[i].vel_y;
             
-
-            newBug.vel_y = -2;
+            newBug.vel_y = -2; //moves the bugs vertically...
             
             //Artificial Intelligence (AI) - MOVING towards targeted tree
             if (bugs[i].x < trees[bugs[i].target].x + 25) //UPDATED
@@ -116,10 +125,20 @@ function canvasApp(){
             if (bugs[i].y < trees[bugs[i].target].y + 10)
             {
                 trees[bugs[i].target].health -= 10; //ADDED
+                updateTreeHealthInfo();
                 bugs.splice(i,1);
             }
         }
 	}
+    
+    function updateTreeHealthInfo()
+    {
+        //Update
+        tree_health_total = 0;
+        for (var i=0; i < trees.length - 1; i++) {
+            tree_health_total += trees[i].health;
+        }
+    }
     
 	function gameLoop() {
         window.setTimeout(gameLoop, 30);
