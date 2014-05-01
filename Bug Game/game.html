@@ -31,6 +31,7 @@ function canvasApp(){
 	    var context = theCanvas.getContext('2d');
 	}
 	
+    //VITAL variables
     var imgBug  = new Image();     //Create image variable for the bugs
     var imgTree = new Image();      //Create image variable for the trees
     var imgBkgd = new Image();      //Create image variable for a background
@@ -39,6 +40,10 @@ function canvasApp(){
     imgBkgd.src = "background.png"; //Load the tree image
     var bugs    = new Array();      //Declare a variable to store all the bugs
     var trees   = new Array();      //Declare a variable to store all the trees
+    
+    //MOUSE coordinates
+    var mouseX;
+    var mouseY;
     
     //INVENTORY variables - 05/20/2014 (Taylor McDowell)
     var money   = 0;
@@ -93,13 +98,39 @@ function canvasApp(){
         //DRAW current overall damage
         score = (tree_health_total/((trees.length-1)*100))*100
         context.fillStyle = "#fff";
-        context.fillText(score+"%", 50, 500);
+        context.fillText("Health: " + score + "%", 50, 50);
+        
+        //DRAW collected money
+        context.fillStyle = "#fff";
+        context.fillText("Money: " + money, 50, 100);
         
         context.restore();
+	}
+    
+    function eventMouseMove(event) {
+		var x;
+   	 	var y;
+    	if (event.pageX || event.pageY) {
+      		x = event.pageX;
+      		y = event.pageY;
+    	}
+    	else {
+     		x = e.clientX + document.body.scrollLeft +
+           document.documentElement.scrollLeft;
+      		y = e.clientY + document.body.scrollTop +
+           document.documentElement.scrollTop;
+    	}
+		x -= theCanvas.offsetLeft;
+		y -= theCanvas.offsetTop;
+			
+		mouseX=x;
+		mouseY=y;
 	}
 	
     //UPDATE to implement objects behavior...
     function updateScreen() {
+        
+        //Each object check...
         for (var i=0; i < bugs.length - 1; i++) {
             //UPDATE bug positions based on their movements...
             bugs[i].x += bugs[i].vel_x;
@@ -128,8 +159,18 @@ function canvasApp(){
                 updateTreeHealthInfo();
                 bugs.splice(i,1);
             }
+            
+            //Kill bug
+            if (bugs[i].x < mouseX && bugs[i].x + 95 > mouseX && bugs[i].y < mouseY && bugs[i].y + 95 > mouseY)
+            {
+                money += 1
+                bugs.splice(i,1);
+            }
         }
 	}
+    
+    theCanvas.addEventListener("mousemove",eventMouseMove, false);
+    theCanvas.addEventListener("mousedown",eventMouseMove, false);
     
     function updateTreeHealthInfo()
     {
