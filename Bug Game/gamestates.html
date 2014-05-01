@@ -264,8 +264,6 @@ function canvasApp(){
 function gameStatePlayerStart()
 {
 		console.log("gameStatePlayerStart")
-		fillBackground();
-		renderScoreBoard();
 		if (player.alpha < 1)
         {
 			player.alpha+=.01;
@@ -279,6 +277,71 @@ function gameStatePlayerStart()
 			
 		}
 }
+function gameStatePlayLevel(){
+		//console.log("gameStatePlayLevel")
+    
+	}
+function checkForEndOfLevel(){
+		if (rocks.length==0) {
+			switchGameState(GAME_STATE_NEW_LEVEL);
+		}
+	}
+	
+	function gameStatePlayerDie(){
+		if (particles.length >0 || playerMissiles.length>0) {
+			frameRateCounter.countFrames();
+			
+		}else{
+			playerShips--;
+			if (playerShips<1) {
+				switchGameState(GAME_STATE_GAME_OVER);
+			}else{
+				//resetPlayer();
+				switchGameState(GAME_STATE_PLAYER_START);
+			}
+		}
+	}
+function gameStateGameOver() {
+		//ConsoleLog.log("Game Over State");
+		if (gameOverStarted !=true){
+			context.fillText  ("Game Over!", 200, 70);
+			context.fillText  ("Tap To Play", 200, 140);
+			
+			gameOverStarted=true;
+			theCanvas.addEventListener("mousedown", onMouseClickGameover, false);
+		}
+	}
+	
+	function onMouseClickGameover(e) {
+		theCanvas.removeEventListener("mousedown", onMouseClickGameover, false);
+		switchGameState(GAME_STATE_TITLE);
+		gameOverStarted=false;
+	}
+    function playerDie() {
+		
+		ConsoleLog.log("player die");
+		switchGameState(GAME_STATE_PLAYER_DIE);
+		
+	}
+    //*** application start
+	switchGameState(GAME_STATE_INIT);
+    
+    //*** consoleLog util object
+//creat constructor
+function ConsoleLog(){
+	
+}
+
+//create function that will be added to the class
+console_log=function(message) {
+	if(typeof(console) !== 'undefined' && console != null) {
+		//console.log(message);
+	}
+}
+//add class/static function to class by assignment
+ConsoleLog.log=console_log;
+
+//*** end console log object
     gameLoop();
 
 }
