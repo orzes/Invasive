@@ -79,10 +79,13 @@ function canvasApp(){
     //DRAW to display objects...
     function drawScreen() {
         context.save();
+				theCanvas.width = theCanvas.width = window.innerWidth;
+		theCanvas.height = theCanvas.height = window.innerHeight;
         context.clearRect(0, 0, theCanvas.width, theCanvas.height);
         
         //DRAW the background
-        context.drawImage(imgBkgd, 0, 0); //ADDED
+        context.drawImage(imgBkgd, 0, 0, theCanvas.width, theCanvas.height); //ADDED
+  
         
         //DRAW bugs
         for (var i=0; i < bugs.length - 1; i++) {
@@ -195,7 +198,7 @@ function canvasApp(){
 </script> 
 </head>
 <body>
-<div style="position: absolute; top: 50px; left: 50px;">
+<div style="position: absolute;">
 <canvas id="canvas" width="1540" height="770">
  Your browser does not support the HTML 5 Canvas. 
 </canvas>
