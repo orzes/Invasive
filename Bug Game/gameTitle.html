@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Ashboer Blaster</title>
+		<script src="modernizr.js"></script>
+		<script type="text/javascript">
+		
+		var gameTitle = new Image();//var to hold game title image button
+		var gamePlay = new Image();//var to hold play image button
+		var gameControl = new Image();//var to hold control image button
+		var gameCredit = new Image();//var to hold credit image button
+		var gameExit = new Image();//var to hold exit image button
+		
+		//-----Images button sources--------
+		gameTitle.src = "Button Sprites/AshboerBlaster.png";
+		gamePlay.src = "Button Sprites/Play.png";
+		gameControl.src = "Button Sprites/Controls.png";
+		gameCredit.src = "Button Sprites/Credits.png";
+		gameExit.src = "Button Sprites/Exit.png";
+		
+		
+		window.onload = function () {
+			if (!Modernizr.canvas) {
+				return;
+			} else {
+				gameTitle.onload = canvasApp ();
+			}
+		}
+
+		function canvasApp() {
+
+			var theCanvas = document.getElementById('canvas');
+		    var context = theCanvas.getContext('2d');   
+
+			drawScreen();
+
+			function drawScreen() {
+				placeImage(gameTitle, 300, 0);
+				placeImage(gamePlay, 0, 550);
+				placeImage(gameControl, 360, 550);
+				placeImage(gameCredit, 720, 550);
+				placeImage(gameExit, 1120, 550);
+			}
+			
+			function placeImage(obj, posX, posY, width, height) {
+				if (width && height) {
+					context.drawImage(obj, posX, posY, width, height);
+				} else {
+					context.drawImage(obj, posX, posY);
+				}
+			}
+		}
+
+		</script> 
+	</head>
+	<body background="bkgrnd.jpg">
+		<div style="position: absolute; top: 50px; left: 50px;">
+			<canvas id="canvas" width="1540" height="770">
+				Your browser does not support the HTML 5 Canvas. 
+			</canvas>
+		</div>
+	</body>
+</html>
