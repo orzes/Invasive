@@ -57,6 +57,7 @@ function canvasApp(){
         newTree.x = 140*i + Math.floor(Math.random() * 55) + 1 - 50; //UPDATED
         newTree.y = 150 + Math.floor(Math.random() * 85) + 1;        //UPDATED
         newTree.health = 100; //ADDED
+        newTree.treated = 0;
         trees.push(newTree);
     }
     
@@ -108,6 +109,8 @@ function canvasApp(){
 	}
     
     function eventMouseMove(event) {
+        theCanvas.removeEventListener("mousedown",eventMouseMove, false);
+
 		var x;
    	 	var y;
     	if (event.pageX || event.pageY) {
@@ -115,9 +118,9 @@ function canvasApp(){
       		y = event.pageY;
     	}
     	else {
-     		x = e.clientX + document.body.scrollLeft +
+     		x = event.clientX + document.body.scrollLeft +
            document.documentElement.scrollLeft;
-      		y = e.clientY + document.body.scrollTop +
+      		y = event.clientY + document.body.scrollTop +
            document.documentElement.scrollTop;
     	}
 		x -= theCanvas.offsetLeft;
@@ -129,6 +132,7 @@ function canvasApp(){
 	
     //UPDATE to implement objects behavior...
     function updateScreen() {
+        theCanvas.addEventListener("mousedown",eventMouseMove, false);
         
         //Each object check...
         for (var i=0; i < bugs.length - 1; i++) {
@@ -161,16 +165,16 @@ function canvasApp(){
             }
             
             //Kill bug
-            if (bugs[i].x < mouseX && bugs[i].x + 95 > mouseX && bugs[i].y < mouseY && bugs[i].y + 95 > mouseY)
+            if ((mouseX > bugs[i].x && mouseX < bugs[i].x+125) && (mouseY > bugs[i].y && mouseY < bugs[i].y+125))
             {
-                money += 1
+                money += 1;
                 bugs.splice(i,1);
+                
+                // To allow killing only one bug at a time...
+                mouseX = -1000 ; mouseY = -1000;
             }
         }
 	}
-    
-    theCanvas.addEventListener("mousemove",eventMouseMove, false);
-    theCanvas.addEventListener("mousedown",eventMouseMove, false);
     
     function updateTreeHealthInfo()
     {
@@ -180,11 +184,12 @@ function canvasApp(){
             tree_health_total += trees[i].health;
         }
     }
+
     
 	function gameLoop() {
-        window.setTimeout(gameLoop, 30);
 		drawScreen();   //CALL the drawing procedure
         updateScreen(); //CALL the updating procedure
+        window.setTimeout(gameLoop, 30);
 	}
     
     gameLoop();
